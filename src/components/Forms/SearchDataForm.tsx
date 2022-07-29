@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Alert, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -14,12 +14,12 @@ const validationSchema = yup
       .string()
       .required('User is required')
       .min(3, 'Please enter at least 3 characters')
-      .matches(/^[0-9a-zA-Z]+$/, 'Must be only alphanumeric'),
+      .matches(/^[0-9a-zA-Z-]+$/, 'Must be only alphanumeric with dashes'),
     repo: yup
       .string()
       .required('Repo is required')
       .min(3, 'Please enter at least 3 characters')
-      .matches(/^[0-9a-zA-Z]+$/, 'Must be only alphanumeric'),
+      .matches(/^[0-9a-zA-Z-]+$/, 'Must be only alphanumeric with dashed'),
   })
   .required();
 
@@ -43,7 +43,6 @@ const SearchDataForm: FC<SearchDataFormProps> = ({ onSubmit }) => {
   });
 
   const submit = (values: ISearchData) => {
-    Alert.alert(JSON.stringify(values));
     onSubmit(values);
   };
 
