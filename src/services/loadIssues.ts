@@ -1,15 +1,25 @@
 import ISearchData from '../types/SearchData';
 import { ILoadIssuesResponseSuccess, ILoadIssuesResponseFailure } from '../types/LoadIssuesReponse';
 
+import { ITEMS_PER_PAGE } from '../Constants';
+
 const API_URL = 'https://api.github.com/repos';
 
 interface ILoadIssues extends ISearchData {
+  page?: number;
+  perPage?: number;
   sort?: 'created' | 'updated' | 'comments';
   sortDirection?: 'asc' | 'desc';
-  page?: number;
 }
 
-export const loadIssues = async ({ user, repo, sort = 'created', sortDirection = 'desc', page = 1 }: ILoadIssues) => {
+export const loadIssues = async ({
+  user,
+  repo,
+  page = 1,
+  perPage = ITEMS_PER_PAGE,
+  sort = 'created',
+  sortDirection = 'desc',
+}: ILoadIssues) => {
   const REPO_URL = `${API_URL}/${user}/${repo}`;
 
   try {
@@ -34,7 +44,7 @@ export const loadIssues = async ({ user, repo, sort = 'created', sortDirection =
       responseReturn.openIssues = repoData.open_issues_count;
 
       // Build issue URL
-      const ISSUES_URL = `${REPO_URL}/issues?page=${[page]}&sort=${sort}&direction=${sortDirection}`;
+      const ISSUES_URL = `${REPO_URL}/issues?page=${[page]}&per+page=${perPage}&sort=${sort}&direction=${sortDirection}`;
 
       const issueResponse = await fetch(ISSUES_URL);
       if (!issueResponse.ok) {
