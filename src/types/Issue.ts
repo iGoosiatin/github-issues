@@ -6,4 +6,6 @@ export default interface IIssue {
     login: string;
   };
   title: string;
+  created_at: string;
+  comments: number;
 }

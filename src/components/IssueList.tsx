@@ -14,7 +14,15 @@ const IssueList: FC<IssueListProps> = ({ issues }) => {
   return (
     <FlatList
       data={issues}
-      renderItem={({ item }) => <IssueItem number={item.number} title={item.title} login={item.user.login} />}
+      renderItem={({ item }) => (
+        <IssueItem
+          number={item.number}
+          title={item.title}
+          login={item.user.login}
+          comments={item.comments}
+          createdAt={item.created_at}
+        />
+      )}
       keyExtractor={(item) => item.id}
     />
   );
@@ -22,6 +30,7 @@ const IssueList: FC<IssueListProps> = ({ issues }) => {
 
 const styles = StyleSheet.create({
   text: {
+    marginTop: 10,
     textAlign: 'center',
   },
 });
