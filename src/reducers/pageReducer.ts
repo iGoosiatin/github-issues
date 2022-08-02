@@ -7,7 +7,7 @@ export interface IPageReducerState {
 
 export interface IPageReducerAction {
   type: 'SET_PAGE' | 'SET_LAST_PAGE';
-  payload: any;
+  payload: number;
 }
 
 export default function pageReducer(state: IPageReducerState, action: IPageReducerAction): IPageReducerState {
