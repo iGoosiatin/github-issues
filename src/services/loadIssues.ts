@@ -44,7 +44,7 @@ export const loadIssues = async ({
       responseReturn.openIssues = repoData.open_issues_count;
 
       // Build issue URL
-      const ISSUES_URL = `${REPO_URL}/issues?page=${[page]}&per+page=${perPage}&sort=${sort}&direction=${sortDirection}`;
+      const ISSUES_URL = `${REPO_URL}/issues?page=${[page]}&per_page=${perPage}&sort=${sort}&direction=${sortDirection}`;
 
       const issueResponse = await fetch(ISSUES_URL);
       if (!issueResponse.ok) {
