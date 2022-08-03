@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ControlledTextInput from './ControlledTextInput';
 import Button from '../Button';
-import ISearchData from '../../types/SearchData';
+import { ISearchData } from '../../types/SearchData';
 
 const validationSchema = yup
   .object()

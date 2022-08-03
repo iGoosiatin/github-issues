@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 
-import ISearchData from './types/SearchData';
+import { ISearchData } from './types/SearchData';
 
 import { SearchDataContext } from './Context';
 

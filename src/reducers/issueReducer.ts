@@ -1,6 +1,7 @@
 import IIssue from '../types/Issue';
 import { SortByType, SortDirectionType } from '../types/Sort';
-import { sortOptions } from '../Utils';
+import { FilterType } from '../types/Filter';
+import { sortOptions, filterOptions } from '../Utils';
 
 export interface IIssueReducerState {
   issues: IIssue[];
@@ -9,6 +10,8 @@ export interface IIssueReducerState {
   sortBy: SortByType;
   sortDirection: SortDirectionType;
   selectedSortOption: number;
+  filterBy: FilterType;
+  selectedFilterOption: number;
   currentPage: number;
   previousPage: number | null;
   nextPage: number | null;
@@ -21,6 +24,7 @@ type IssueReducerActionType =
   | { type: 'SET_ISSUES'; payload: SetIssuesPayload }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_SORTING_OPTION'; payload: number }
+  | { type: 'SET_FILTER_OPTION'; payload: number }
   | { type: 'SET_PAGE'; payload: number }
   | { type: 'SET_ERROR'; payload: string };
 
@@ -59,6 +63,13 @@ export default function issueReducer(state: IIssueReducerState, action: IssueRed
         currentPage: 1,
         previousPage: null,
         nextPage: state.lastPage > 1 ? 2 : null,
+      };
+    }
+    case 'SET_FILTER_OPTION': {
+      return {
+        ...state,
+        selectedFilterOption: action.payload,
+        filterBy: filterOptions[action.payload].value,
       };
     }
     case 'SET_PAGE': {

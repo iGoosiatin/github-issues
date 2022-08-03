@@ -1,9 +1,8 @@
+import { ISelectOption } from './types/Select';
 import { ISort } from './types/Sort';
-interface ISortOption {
-  label: string;
-  value: ISort;
-}
-export const sortOptions: ISortOption[] = [
+import { FilterType } from './types/Filter';
+
+export const sortOptions: ISelectOption<ISort>[] = [
   {
     label: 'Newest',
     value: { sortBy: 'created', sortDirection: 'desc' },
@@ -19,5 +18,20 @@ export const sortOptions: ISortOption[] = [
   {
     label: 'Least commented',
     value: { sortBy: 'comments', sortDirection: 'asc' },
+  },
+];
+
+export const filterOptions: ISelectOption<FilterType>[] = [
+  {
+    label: 'All',
+    value: null,
+  },
+  {
+    label: 'Issues',
+    value: 'issues',
+  },
+  {
+    label: 'Pull Requests',
+    value: 'pullRequests',
   },
 ];

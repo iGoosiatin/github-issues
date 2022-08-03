@@ -8,4 +8,5 @@ export default interface IIssue {
   title: string;
   created_at: string;
   comments: number;
+  pull_request?: object;
 }

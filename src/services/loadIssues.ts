@@ -1,4 +1,4 @@
-import ISearchData from '../types/SearchData';
+import { ISearchData } from '../types/SearchData';
 import { SortByType, SortDirectionType } from '../types/Sort';
 import { ILoadIssuesResponseSuccess, ILoadIssuesResponseFailure } from '../types/LoadIssuesReponse';
 

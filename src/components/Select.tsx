@@ -1,22 +1,24 @@
 import React, { FC, memo } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import { ISelectOption } from '../types/Select';
 
-interface SortProps {
-  options: any;
+interface SelectProps<T> {
+  title: string;
+  options: ISelectOption<T>[];
   selectedIndex: number;
-  onSort: (index: number) => void;
+  onSelect: (index: number) => void;
 }
 
-const Sort: FC<SortProps> = ({ options, selectedIndex = 0, onSort }) => {
+const Select: FC<SelectProps<any>> = ({ title, options, selectedIndex = 0, onSelect }) => {
   return (
     <View style={styles.container}>
-      <Text>Sort By:</Text>
+      <Text>{title}</Text>
       <SelectDropdown
         data={options}
         defaultValueByIndex={selectedIndex}
-        onSelect={(selectedItem, index) => {
-          onSort(index);
+        onSelect={(_, index) => {
+          onSelect(index);
         }}
         buttonTextAfterSelection={(selectedItem) => {
           return selectedItem.label;
@@ -36,13 +38,11 @@ const Sort: FC<SortProps> = ({ options, selectedIndex = 0, onSort }) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: '30%',
     marginLeft: 5,
-    paddingBottom: 5,
-    borderBottomWidth: 2,
-    borderBottomColor: 'darkgray',
   },
   dropdownButtonStyle: {
-    width: '30%',
+    width: '100%',
     height: 30,
     backgroundColor: '#FFF',
     borderWidth: 1,
@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Sort;
+export default Select;
 
-export const MemoizedSort = memo(Sort);
+export const MemoizedSelect = memo(Select);

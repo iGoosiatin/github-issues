@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useReducer, useCallback } from 'react';
 import { ActivityIndicator, Text, StyleSheet, View } from 'react-native';
 import { loadIssues } from '../services/loadIssues';
 import { SearchDataContext } from '../Context';
-import { MemoizedSort } from './Sort';
+import { MemoizedSelect } from './Select';
 import IssueList from './IssueList';
 import { MemoizedPaginationControls } from './Pagination/PaginationControls';
 import issueReducer, { IIssueReducerState } from '../reducers/issueReducer';
 import { ITEMS_PER_PAGE } from '../Constants';
-import { sortOptions } from '../Utils';
+import { sortOptions, filterOptions } from '../Utils';
 
-import ISearchData from '../types/SearchData';
+import { ISearchData } from '../types/SearchData';
 import { ILoadIssuesResponseFailure, ILoadIssuesResponseSuccess } from '../types/LoadIssuesReponse';
 import { SortByType, SortDirectionType } from '../types/Sort';
+import IIssue from '../types/Issue';
 
 const initialState: IIssueReducerState = {
   issues: [],
@@ -20,6 +21,8 @@ const initialState: IIssueReducerState = {
   sortBy: 'created',
   sortDirection: 'desc',
   selectedSortOption: 0,
+  filterBy: null,
+  selectedFilterOption: 0,
   currentPage: 1,
   previousPage: null,
   nextPage: null,
@@ -39,6 +42,10 @@ const Issues = () => {
 
   const onSort = useCallback((selectedIndex: number) => {
     dispatch({ type: 'SET_SORTING_OPTION', payload: selectedIndex });
+  }, []);
+
+  const onFilter = useCallback((selectedIndex: number) => {
+    dispatch({ type: 'SET_FILTER_OPTION', payload: selectedIndex });
   }, []);
 
   useEffect(() => {
@@ -82,13 +89,23 @@ const Issues = () => {
     return <Text style={styles.errorText}>{state.errorText}</Text>;
   }
 
+  let issues: IIssue[];
+  if (state.filterBy === null) {
+    issues = state.issues;
+  } else if (state.filterBy === 'issues') {
+    issues = state.issues.filter((issue) => issue.pull_request === undefined);
+  } else {
+    issues = state.issues.filter((issue) => issue.pull_request !== undefined);
+  }
+
   return (
     <View style={styles.container}>
-      <View>
-        <MemoizedSort options={sortOptions} selectedIndex={state.selectedSortOption} onSort={onSort} />
+      <View style={styles.controls}>
+        <MemoizedSelect title="Sort By:" options={sortOptions} selectedIndex={state.selectedSortOption} onSelect={onSort} />
+        <MemoizedSelect title="Filter By:" options={filterOptions} selectedIndex={state.selectedFilterOption} onSelect={onFilter} />
       </View>
       <View style={styles.list}>
-        <IssueList issues={state.issues} />
+        <IssueList issues={issues} />
       </View>
       <MemoizedPaginationControls
         currentPage={state.currentPage}
@@ -114,6 +131,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  controls: {
+    flexDirection: 'row',
+    marginTop: 5,
+    paddingBottom: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: 'darkgray',
   },
   list: {
     flex: 1,

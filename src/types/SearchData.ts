@@ -1,5 +1,4 @@
-/* eslint-disable semi */
-export default interface ISearchData {
+export interface ISearchData {
   user: string;
   repo: string;
 }
