@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = ({ title, onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <TouchableOpacity onPress={onPress} style={styles.button} accessibilityRole="button">
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
