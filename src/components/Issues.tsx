@@ -5,7 +5,6 @@ import { SearchDataContext } from '../Context';
 import Sort from './Sort';
 import IssueList from './IssueList';
 import PaginationControls from './Pagination/PaginationControls';
-import pageReducer, { IPageReducerState } from '../reducers/pageReducer';
 import issueReducer, { IIssueReducerState } from '../reducers/issueReducer';
 import { ITEMS_PER_PAGE } from '../Constants';
 import { sortOptions } from '../Utils';
@@ -14,18 +13,15 @@ import ISearchData from '../types/SearchData';
 import { ILoadIssuesResponseFailure, ILoadIssuesResponseSuccess } from '../types/LoadIssuesReponse';
 import { SortByType, SortDirectionType } from '../types/Sort';
 
-const initialPageState: IPageReducerState = {
-  currentPage: 1,
-  previousPage: null,
-  nextPage: null,
-  lastPage: 1,
-};
-
-const initialIssueState: IIssueReducerState = {
+const initialState: IIssueReducerState = {
   issues: [],
   sortBy: 'created',
   sortDirection: 'desc',
   selectedSortOption: 0,
+  currentPage: 1,
+  previousPage: null,
+  nextPage: null,
+  lastPage: 1,
 };
 
 const Issues = () => {
@@ -34,8 +30,7 @@ const Issues = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState<String>('');
 
-  const [issueState, dispatchIssue] = useReducer(issueReducer, initialIssueState);
-  const [pageState, dispatchPage] = useReducer(pageReducer, initialPageState);
+  const [state, dispatch] = useReducer(issueReducer, initialState);
 
   useEffect(() => {
     const handleLoadIssues = async (
@@ -49,29 +44,29 @@ const Issues = () => {
       if (response.isError) {
         const failedLoad = response as ILoadIssuesResponseFailure;
         setErrorText(failedLoad.errorText);
-        dispatchIssue({ type: 'SET_ISSUES', payload: [] });
+        dispatch({ type: 'SET_ISSUES', payload: [] });
       } else {
         const successLoad = response as ILoadIssuesResponseSuccess;
         setErrorText('');
-        dispatchIssue({ type: 'SET_ISSUES', payload: successLoad.issues });
-        dispatchPage({ type: 'SET_LAST_PAGE', payload: Math.ceil(successLoad.openIssues / ITEMS_PER_PAGE) });
+        dispatch({ type: 'SET_ISSUES', payload: successLoad.issues });
+        dispatch({ type: 'SET_LAST_PAGE', payload: Math.ceil(successLoad.openIssues / ITEMS_PER_PAGE) });
       }
       setIsLoading(false);
     };
     if (searchData !== null) {
-      handleLoadIssues(searchData, pageState.currentPage, issueState.sortBy, issueState.sortDirection);
+      handleLoadIssues(searchData, state.currentPage, state.sortBy, state.sortDirection);
     }
-  }, [searchData, pageState.currentPage, issueState.sortBy, issueState.sortDirection]);
+  }, [searchData, state.currentPage, state.sortBy, state.sortDirection]);
 
   const setPage = (page: number | null) => {
     if (page === null) {
       return;
     }
-    dispatchPage({ type: 'SET_PAGE', payload: page });
+    dispatch({ type: 'SET_PAGE', payload: page });
   };
 
   const onSort = (selectedIndex: number) => {
-    dispatchIssue({ type: 'SET_SORTING_OPTION', payload: selectedIndex });
+    dispatch({ type: 'SET_SORTING_OPTION', payload: selectedIndex });
     setPage(1);
   };
 
@@ -90,16 +85,16 @@ const Issues = () => {
   return (
     <View style={styles.container}>
       <View>
-        <Sort options={sortOptions} selectedIndex={issueState.selectedSortOption} onSort={onSort} />
+        <Sort options={sortOptions} selectedIndex={state.selectedSortOption} onSort={onSort} />
       </View>
       <View style={styles.list}>
-        <IssueList issues={issueState.issues} />
+        <IssueList issues={state.issues} />
       </View>
       <PaginationControls
-        currentPage={pageState.currentPage}
-        previousPage={pageState.previousPage}
-        nextPage={pageState.nextPage}
-        lastPage={pageState.lastPage}
+        currentPage={state.currentPage}
+        previousPage={state.previousPage}
+        nextPage={state.nextPage}
+        lastPage={state.lastPage}
         setPage={setPage}
       />
     </View>

@@ -7,10 +7,14 @@ export interface IIssueReducerState {
   sortBy: SortByType;
   sortDirection: SortDirectionType;
   selectedSortOption: number;
+  currentPage: number;
+  previousPage: number | null;
+  nextPage: number | null;
+  lastPage: number;
 }
 
 export interface IIssueReducerAction {
-  type: 'SET_ISSUES' | 'SET_SORTING_OPTION';
+  type: 'SET_ISSUES' | 'SET_SORTING_OPTION' | 'SET_PAGE' | 'SET_LAST_PAGE';
   payload: any;
 }
 
@@ -28,6 +32,24 @@ export default function issueReducer(state: IIssueReducerState, action: IIssueRe
         selectedSortOption: action.payload,
         sortBy: sortOptions[action.payload].value.sortBy,
         sortDirection: sortOptions[action.payload].value.sortDirection,
+        currentPage: 1,
+        previousPage: null,
+        nextPage: state.lastPage > 1 ? 2 : null,
+      };
+    }
+    case 'SET_PAGE': {
+      return {
+        ...state,
+        currentPage: action.payload,
+        previousPage: action.payload - 1 > 0 ? action.payload - 1 : null,
+        nextPage: action.payload + 1 <= state.lastPage ? action.payload + 1 : null,
+      };
+    }
+    case 'SET_LAST_PAGE': {
+      return {
+        ...state,
+        lastPage: action.payload,
+        nextPage: state.currentPage < action.payload ? state.currentPage + 1 : null,
       };
     }
     default: {
