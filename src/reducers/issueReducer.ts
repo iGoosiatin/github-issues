@@ -13,12 +13,14 @@ export interface IIssueReducerState {
   lastPage: number;
 }
 
-export interface IIssueReducerAction {
-  type: 'SET_ISSUES' | 'SET_SORTING_OPTION' | 'SET_PAGE';
-  payload: any;
-}
+type SetIssuesPayload = { issues: IIssue[]; lastPage: number };
 
-export default function issueReducer(state: IIssueReducerState, action: IIssueReducerAction): IIssueReducerState {
+type IssueReducerActionType =
+  | { type: 'SET_ISSUES'; payload: SetIssuesPayload }
+  | { type: 'SET_SORTING_OPTION'; payload: number }
+  | { type: 'SET_PAGE'; payload: number };
+
+export default function issueReducer(state: IIssueReducerState, action: IssueReducerActionType): IIssueReducerState {
   switch (action.type) {
     case 'SET_ISSUES': {
       return {
