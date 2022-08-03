@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import PaginationButton from './PaginationButton';
 
@@ -37,3 +37,5 @@ const styles = StyleSheet.create({
 });
 
 export default PaginationControls;
+
+export const MemoizedPaginationControls = memo(PaginationControls);

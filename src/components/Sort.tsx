@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -71,3 +71,5 @@ const styles = StyleSheet.create({
 });
 
 export default Sort;
+
+export const MemoizedSort = memo(Sort);

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState, useReducer } from 'react';
+import React, { useContext, useEffect, useState, useReducer, useCallback } from 'react';
 import { ActivityIndicator, Text, StyleSheet, View } from 'react-native';
 import { loadIssues } from '../services/loadIssues';
 import { SearchDataContext } from '../Context';
-import Sort from './Sort';
+import { MemoizedSort } from './Sort';
 import IssueList from './IssueList';
-import PaginationControls from './Pagination/PaginationControls';
+import { MemoizedPaginationControls } from './Pagination/PaginationControls';
 import issueReducer, { IIssueReducerState } from '../reducers/issueReducer';
 import { ITEMS_PER_PAGE } from '../Constants';
 import { sortOptions } from '../Utils';
@@ -32,6 +32,17 @@ const Issues = () => {
 
   const [state, dispatch] = useReducer(issueReducer, initialState);
 
+  const setPage = useCallback((page: number | null) => {
+    if (page === null) {
+      return;
+    }
+    dispatch({ type: 'SET_PAGE', payload: page });
+  }, []);
+
+  const onSort = useCallback((selectedIndex: number) => {
+    dispatch({ type: 'SET_SORTING_OPTION', payload: selectedIndex });
+  }, []);
+
   useEffect(() => {
     const handleLoadIssues = async (
       { user, repo }: ISearchData,
@@ -44,12 +55,17 @@ const Issues = () => {
       if (response.isError) {
         const failedLoad = response as ILoadIssuesResponseFailure;
         setErrorText(failedLoad.errorText);
-        dispatch({ type: 'SET_ISSUES', payload: [] });
+        dispatch({ type: 'SET_ISSUES', payload: { issues: [], lastPage: 1 } });
       } else {
         const successLoad = response as ILoadIssuesResponseSuccess;
         setErrorText('');
-        dispatch({ type: 'SET_ISSUES', payload: successLoad.issues });
-        dispatch({ type: 'SET_LAST_PAGE', payload: Math.ceil(successLoad.openIssues / ITEMS_PER_PAGE) });
+        dispatch({
+          type: 'SET_ISSUES',
+          payload: {
+            issues: successLoad.issues,
+            lastPage: Math.ceil(successLoad.openIssues / ITEMS_PER_PAGE),
+          },
+        });
       }
       setIsLoading(false);
     };
@@ -57,18 +73,6 @@ const Issues = () => {
       handleLoadIssues(searchData, state.currentPage, state.sortBy, state.sortDirection);
     }
   }, [searchData, state.currentPage, state.sortBy, state.sortDirection]);
-
-  const setPage = (page: number | null) => {
-    if (page === null) {
-      return;
-    }
-    dispatch({ type: 'SET_PAGE', payload: page });
-  };
-
-  const onSort = (selectedIndex: number) => {
-    dispatch({ type: 'SET_SORTING_OPTION', payload: selectedIndex });
-    setPage(1);
-  };
 
   if (isLoading) {
     return (
@@ -85,12 +89,12 @@ const Issues = () => {
   return (
     <View style={styles.container}>
       <View>
-        <Sort options={sortOptions} selectedIndex={state.selectedSortOption} onSort={onSort} />
+        <MemoizedSort options={sortOptions} selectedIndex={state.selectedSortOption} onSort={onSort} />
       </View>
       <View style={styles.list}>
         <IssueList issues={state.issues} />
       </View>
-      <PaginationControls
+      <MemoizedPaginationControls
         currentPage={state.currentPage}
         previousPage={state.previousPage}
         nextPage={state.nextPage}
