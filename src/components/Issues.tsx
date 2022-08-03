@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useReducer, useCallback } from 'react';
+import React, { useContext, useEffect, useReducer, useCallback } from 'react';
 import { ActivityIndicator, Text, StyleSheet, View } from 'react-native';
 import { loadIssues } from '../services/loadIssues';
 import { SearchDataContext } from '../Context';
@@ -15,6 +15,8 @@ import { SortByType, SortDirectionType } from '../types/Sort';
 
 const initialState: IIssueReducerState = {
   issues: [],
+  isLoading: false,
+  errorText: '',
   sortBy: 'created',
   sortDirection: 'desc',
   selectedSortOption: 0,
@@ -26,10 +28,6 @@ const initialState: IIssueReducerState = {
 
 const Issues = () => {
   const { searchData } = useContext(SearchDataContext);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorText, setErrorText] = useState<String>('');
-
   const [state, dispatch] = useReducer(issueReducer, initialState);
 
   const setPage = useCallback((page: number | null) => {
@@ -50,15 +48,13 @@ const Issues = () => {
       sortBy: SortByType,
       sortDirection: SortDirectionType,
     ) => {
-      setIsLoading(true);
+      dispatch({ type: 'SET_LOADING', payload: true });
       const response = await loadIssues({ user, repo, page, sortBy, sortDirection });
       if (response.isError) {
         const failedLoad = response as ILoadIssuesResponseFailure;
-        setErrorText(failedLoad.errorText);
-        dispatch({ type: 'SET_ISSUES', payload: { issues: [], lastPage: 1 } });
+        dispatch({ type: 'SET_ERROR', payload: failedLoad.errorText });
       } else {
         const successLoad = response as ILoadIssuesResponseSuccess;
-        setErrorText('');
         dispatch({
           type: 'SET_ISSUES',
           payload: {
@@ -67,14 +63,14 @@ const Issues = () => {
           },
         });
       }
-      setIsLoading(false);
     };
+
     if (searchData !== null) {
       handleLoadIssues(searchData, state.currentPage, state.sortBy, state.sortDirection);
     }
   }, [searchData, state.currentPage, state.sortBy, state.sortDirection]);
 
-  if (isLoading) {
+  if (state.isLoading) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" color="gray" />
@@ -82,8 +78,8 @@ const Issues = () => {
     );
   }
 
-  if (errorText) {
-    return <Text style={styles.errorText}>{errorText}</Text>;
+  if (state.errorText) {
+    return <Text style={styles.errorText}>{state.errorText}</Text>;
   }
 
   return (

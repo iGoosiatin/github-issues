@@ -4,6 +4,8 @@ import { sortOptions } from '../Utils';
 
 export interface IIssueReducerState {
   issues: IIssue[];
+  isLoading: boolean;
+  errorText: string;
   sortBy: SortByType;
   sortDirection: SortDirectionType;
   selectedSortOption: number;
@@ -17,8 +19,10 @@ type SetIssuesPayload = { issues: IIssue[]; lastPage: number };
 
 type IssueReducerActionType =
   | { type: 'SET_ISSUES'; payload: SetIssuesPayload }
+  | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_SORTING_OPTION'; payload: number }
-  | { type: 'SET_PAGE'; payload: number };
+  | { type: 'SET_PAGE'; payload: number }
+  | { type: 'SET_ERROR'; payload: string };
 
 export default function issueReducer(state: IIssueReducerState, action: IssueReducerActionType): IIssueReducerState {
   switch (action.type) {
@@ -26,8 +30,24 @@ export default function issueReducer(state: IIssueReducerState, action: IssueRed
       return {
         ...state,
         issues: [...action.payload.issues],
+        isLoading: false,
+        errorText: '',
         lastPage: action.payload.lastPage,
         nextPage: state.currentPage < action.payload.lastPage ? state.currentPage + 1 : null,
+      };
+    }
+    case 'SET_ERROR': {
+      return {
+        ...state,
+        errorText: action.payload,
+        isLoading: false,
+        issues: [],
+      };
+    }
+    case 'SET_LOADING': {
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     }
     case 'SET_SORTING_OPTION': {
