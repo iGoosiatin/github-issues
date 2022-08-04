@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { SearchDataForm } from '../components/Forms';
 import { SearchDataContext } from '../Context';
 
+import { SCREENS } from '../Constants';
+
 import { ISearchData } from '../types/SearchData';
 
 const HomeScreen = ({ navigation }: any) => {
@@ -9,7 +11,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   const onSearchSubmit = (data: ISearchData) => {
     setSearchData(data);
-    navigation.navigate('Issues');
+    navigation.navigate(SCREENS.ISSUES);
   };
 
   return <SearchDataForm onSubmit={onSearchSubmit} />;

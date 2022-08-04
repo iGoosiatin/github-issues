@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
@@ -9,7 +9,7 @@ import { SearchDataContext } from './Context';
 
 const App = () => {
   const [searchData, setSearchData] = useState<ISearchData | null>(null);
-  const searchDataStore = useMemo(() => ({ searchData, setSearchData }), [searchData]);
+  const searchDataStore = { searchData, setSearchData };
 
   return (
     <SafeAreaView style={styles.container}>

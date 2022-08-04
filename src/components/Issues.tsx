@@ -10,9 +10,7 @@ import { ITEMS_PER_PAGE } from '../Constants';
 import { sortOptions, filterOptions } from '../Utils';
 
 import { ISearchData } from '../types/SearchData';
-import { ILoadIssuesResponseFailure, ILoadIssuesResponseSuccess } from '../types/LoadIssuesReponse';
 import { SortByType, SortDirectionType } from '../types/Sort';
-import IIssue from '../types/Issue';
 
 const initialState: IIssueReducerState = {
   issues: [],
@@ -58,44 +56,25 @@ const Issues = () => {
       dispatch({ type: 'SET_LOADING', payload: true });
       const response = await loadIssues({ user, repo, page, sortBy, sortDirection });
       if (response.isError) {
-        const failedLoad = response as ILoadIssuesResponseFailure;
-        dispatch({ type: 'SET_ERROR', payload: failedLoad.errorText });
+        dispatch({ type: 'SET_ERROR', payload: response.errorText });
       } else {
-        const successLoad = response as ILoadIssuesResponseSuccess;
         dispatch({
           type: 'SET_ISSUES',
           payload: {
-            issues: successLoad.issues,
-            lastPage: Math.ceil(successLoad.openIssues / ITEMS_PER_PAGE),
+            issues: response.issues,
+            lastPage: Math.ceil(response.openIssues / ITEMS_PER_PAGE),
           },
         });
       }
     };
 
-    if (searchData !== null) {
+    if (searchData) {
       handleLoadIssues(searchData, state.currentPage, state.sortBy, state.sortDirection);
     }
   }, [searchData, state.currentPage, state.sortBy, state.sortDirection]);
 
-  if (state.isLoading) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color="gray" />
-      </View>
-    );
-  }
-
   if (state.errorText) {
     return <Text style={styles.errorText}>{state.errorText}</Text>;
-  }
-
-  let issues: IIssue[];
-  if (state.filterBy === null) {
-    issues = state.issues;
-  } else if (state.filterBy === 'issues') {
-    issues = state.issues.filter((issue) => issue.pull_request === undefined);
-  } else {
-    issues = state.issues.filter((issue) => issue.pull_request !== undefined);
   }
 
   return (
@@ -104,9 +83,15 @@ const Issues = () => {
         <MemoizedSelect title="Sort By:" options={sortOptions} selectedIndex={state.selectedSortOption} onSelect={onSort} />
         <MemoizedSelect title="Filter By:" options={filterOptions} selectedIndex={state.selectedFilterOption} onSelect={onFilter} />
       </View>
-      <View style={styles.list}>
-        <IssueList issues={issues} />
-      </View>
+      {state.isLoading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color="gray" />
+        </View>
+      ) : (
+        <View style={styles.list}>
+          <IssueList issues={state.issues} filter={state.filterBy} />
+        </View>
+      )}
       <MemoizedPaginationControls
         currentPage={state.currentPage}
         previousPage={state.previousPage}

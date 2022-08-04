@@ -1,6 +1,6 @@
 import { ISearchData } from '../types/SearchData';
 import { SortByType, SortDirectionType } from '../types/Sort';
-import { ILoadIssuesResponseSuccess, ILoadIssuesResponseFailure } from '../types/LoadIssuesReponse';
+import { ILoadIssuesResponse } from '../types/LoadIssuesReponse';
 
 import { ITEMS_PER_PAGE } from '../Constants';
 
@@ -23,13 +23,14 @@ export const loadIssues = async ({
 }: ILoadIssues) => {
   const REPO_URL = `${API_URL}/${user}/${repo}`;
 
-  try {
-    const responseReturn: ILoadIssuesResponseSuccess = {
-      isError: false,
-      issues: [],
-      openIssues: 0,
-    };
+  const responseReturn: ILoadIssuesResponse = {
+    isError: false,
+    issues: [],
+    openIssues: 0,
+    errorText: '',
+  };
 
+  try {
     const repoResponse = await fetch(REPO_URL);
     if (!repoResponse.ok) {
       const error = await repoResponse.json();
@@ -58,10 +59,8 @@ export const loadIssues = async ({
       }
     }
   } catch (error) {
-    const responseReturn: ILoadIssuesResponseFailure = {
-      isError: true,
-      errorText: String(error),
-    };
+    responseReturn.isError = true;
+    responseReturn.errorText = String(error);
     return responseReturn;
   }
 };

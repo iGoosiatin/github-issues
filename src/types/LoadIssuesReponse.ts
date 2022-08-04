@@ -1,12 +1,8 @@
 import IIssue from './Issue';
 
-export interface ILoadIssuesResponseSuccess {
+export interface ILoadIssuesResponse {
   isError: boolean;
   issues: IIssue[];
   openIssues: number;
-}
-
-export interface ILoadIssuesResponseFailure {
-  isError: boolean;
   errorText: string;
 }

@@ -19,11 +19,11 @@ const PaginationControls: FC<PaginationControlsProps> = ({ currentPage, previous
 
   return (
     <View style={styles.container}>
-      <PaginationButton title="<" disabled={previousPage === null ? true : false} setCurrent={() => setPage(previousPage)} />
+      <PaginationButton title="<" disabled={!previousPage ? true : false} setCurrent={() => setPage(previousPage)} />
       {pages.map((page) => (
         <PaginationButton key={page} title={page.toString()} current={page === currentPage} setCurrent={() => setPage(page)} />
       ))}
-      <PaginationButton title=">" disabled={nextPage === null ? true : false} setCurrent={() => setPage(nextPage)} />
+      <PaginationButton title=">" disabled={!nextPage ? true : false} setCurrent={() => setPage(nextPage)} />
     </View>
   );
 };
