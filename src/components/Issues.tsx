@@ -1,77 +1,22 @@
-import React, { useContext, useEffect, useReducer, useCallback } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ActivityIndicator, Text, StyleSheet, View } from 'react-native';
-import { loadIssues } from '../services/loadIssues';
+import { useIssues } from '../hooks/useIssues';
 import { SearchDataContext } from '../Context';
-import { MemoizedSelect } from './Select';
 import IssueList from './IssueList';
+import { MemoizedSelect } from './Select';
 import { MemoizedPaginationControls } from './Pagination/PaginationControls';
-import issueReducer, { IIssueReducerState } from '../reducers/issueReducer';
-import { ITEMS_PER_PAGE } from '../Constants';
+
 import { sortOptions, filterOptions } from '../Utils';
-
-import { ISearchData } from '../types/SearchData';
-import { SortByType, SortDirectionType } from '../types/Sort';
-
-const initialState: IIssueReducerState = {
-  issues: [],
-  isLoading: false,
-  errorText: '',
-  sortBy: 'created',
-  sortDirection: 'desc',
-  selectedSortOption: 0,
-  filterBy: null,
-  selectedFilterOption: 0,
-  currentPage: 1,
-  previousPage: null,
-  nextPage: null,
-  lastPage: 1,
-};
 
 const Issues = () => {
   const { searchData } = useContext(SearchDataContext);
-  const [state, dispatch] = useReducer(issueReducer, initialState);
-
-  const setPage = useCallback((page: number | null) => {
-    if (page === null) {
-      return;
-    }
-    dispatch({ type: 'SET_PAGE', payload: page });
-  }, []);
-
-  const onSort = useCallback((selectedIndex: number) => {
-    dispatch({ type: 'SET_SORTING_OPTION', payload: selectedIndex });
-  }, []);
-
-  const onFilter = useCallback((selectedIndex: number) => {
-    dispatch({ type: 'SET_FILTER_OPTION', payload: selectedIndex });
-  }, []);
+  const { state, handleLoadIssues, onFilter, onSort, setPage } = useIssues();
 
   useEffect(() => {
-    const handleLoadIssues = async (
-      { user, repo }: ISearchData,
-      page: number,
-      sortBy: SortByType,
-      sortDirection: SortDirectionType,
-    ) => {
-      dispatch({ type: 'SET_LOADING', payload: true });
-      const response = await loadIssues({ user, repo, page, sortBy, sortDirection });
-      if (response.isError) {
-        dispatch({ type: 'SET_ERROR', payload: response.errorText });
-      } else {
-        dispatch({
-          type: 'SET_ISSUES',
-          payload: {
-            issues: response.issues,
-            lastPage: Math.ceil(response.openIssues / ITEMS_PER_PAGE),
-          },
-        });
-      }
-    };
-
     if (searchData) {
-      handleLoadIssues(searchData, state.currentPage, state.sortBy, state.sortDirection);
+      handleLoadIssues(searchData);
     }
-  }, [searchData, state.currentPage, state.sortBy, state.sortDirection]);
+  }, [handleLoadIssues, searchData]);
 
   if (state.errorText) {
     return <Text style={styles.errorText}>{state.errorText}</Text>;
