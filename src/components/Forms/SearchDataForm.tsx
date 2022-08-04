@@ -19,7 +19,7 @@ const validationSchema = yup
       .string()
       .required('Repo is required')
       .min(3, 'Please enter at least 3 characters')
-      .matches(/^[0-9a-zA-Z-]+$/, 'Must be only alphanumeric with dashed'),
+      .matches(/^[0-9a-zA-Z-]+$/, 'Must be only alphanumeric with dashes'),
   })
   .required();
 

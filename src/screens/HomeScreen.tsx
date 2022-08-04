@@ -7,12 +7,12 @@ import { ISearchData } from '../types/SearchData';
 const HomeScreen = ({ navigation }: any) => {
   const { setSearchData } = useContext(SearchDataContext);
 
-  const onSearchSumbit = (data: ISearchData) => {
+  const onSearchSubmit = (data: ISearchData) => {
     setSearchData(data);
     navigation.navigate('Issues');
   };
 
-  return <SearchDataForm onSubmit={onSearchSumbit} />;
+  return <SearchDataForm onSubmit={onSearchSubmit} />;
 };
 
 export default HomeScreen;
