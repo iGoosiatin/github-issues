@@ -41,7 +41,12 @@ export function useIssues() {
 
   const handleLoadIssues = useCallback(
     async ({ user, repo }: ISearchData) => {
-      dispatch({ type: 'SET_LOADING', payload: true });
+      setTimeout(() => {
+        if (response) {
+          return;
+        }
+        dispatch({ type: 'SET_LOADING', payload: true });
+      }, 700);
       const response = await loadIssues({
         user,
         repo,
