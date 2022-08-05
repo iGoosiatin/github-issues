@@ -1,5 +1,5 @@
 import React from 'react';
-import PaginationControls from '../components/Pagination/PaginationControls';
+import PaginationControls from '../../components/Pagination/PaginationControls';
 
 import { fireEvent, render } from '@testing-library/react-native';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchDataForm from '../components/Forms/SearchDataForm';
+import SearchDataForm from '../../components/Forms/SearchDataForm';
 
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
