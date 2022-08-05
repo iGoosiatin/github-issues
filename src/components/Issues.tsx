@@ -5,12 +5,13 @@ import { SearchDataContext } from '../Context';
 import IssueList from './IssueList';
 import { MemoizedSelect } from './Select';
 import { MemoizedPaginationControls } from './Pagination/PaginationControls';
+import { initialState } from '../State';
 
 import { sortOptions, filterOptions } from '../Utils';
 
 const Issues = () => {
   const { searchData } = useContext(SearchDataContext);
-  const { state, handleLoadIssues, onFilter, onSort, setPage } = useIssues();
+  const { state, handleLoadIssues, onFilter, onSort, setPage } = useIssues(initialState);
 
   useEffect(() => {
     if (searchData) {

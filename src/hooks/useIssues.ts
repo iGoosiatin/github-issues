@@ -6,22 +6,7 @@ import { ITEMS_PER_PAGE } from '../Constants';
 
 import { ISearchData } from '../types/SearchData';
 
-const initialState: IIssueReducerState = {
-  issues: [],
-  isLoading: false,
-  errorText: '',
-  sortBy: 'created',
-  sortDirection: 'desc',
-  selectedSortOption: 0,
-  filterBy: null,
-  selectedFilterOption: 0,
-  currentPage: 1,
-  previousPage: null,
-  nextPage: null,
-  lastPage: 1,
-};
-
-export function useIssues() {
+export function useIssues(initialState: IIssueReducerState) {
   const [state, dispatch] = useReducer(issueReducer, initialState);
 
   const setPage = useCallback((page: number | null) => {
