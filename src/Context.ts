@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import ISearchData from './types/SearchData';
+import { ISearchData } from './types/SearchData';
 
 interface ISearchDataContext {
   searchData: ISearchData | null;
