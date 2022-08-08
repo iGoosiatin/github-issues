@@ -1,0 +1,506 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Issue component Renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "borderBottomColor": "darkgray",
+        "borderBottomWidth": 2,
+        "flexDirection": "row",
+        "marginTop": 5,
+        "paddingBottom": 5,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "marginLeft": 5,
+          "width": "30%",
+        }
+      }
+    >
+      <Text>
+        Sort By:
+      </Text>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#FFF",
+              "borderColor": "#444",
+              "borderWidth": 1,
+              "height": 30,
+              "paddingLeft": 5,
+              "width": "100%",
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 35,
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "flex": 1,
+                  "fontSize": 16,
+                },
+                Object {
+                  "fontSize": 12,
+                },
+                Object {},
+              ]
+            }
+          >
+            Newest
+          </Text>
+          <Image
+            source={
+              Object {
+                "testUri": "../../react-native-element-dropdown/lib/commonjs/assets/down.png",
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "height": 20,
+                  "width": 20,
+                },
+                Object {
+                  "tintColor": "gray",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginLeft": 5,
+          "width": "30%",
+        }
+      }
+    >
+      <Text>
+        Filter By:
+      </Text>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#FFF",
+              "borderColor": "#444",
+              "borderWidth": 1,
+              "height": 30,
+              "paddingLeft": 5,
+              "width": "100%",
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 35,
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "flex": 1,
+                  "fontSize": 16,
+                },
+                Object {
+                  "fontSize": 12,
+                },
+                Object {},
+              ]
+            }
+          >
+            Select filter
+          </Text>
+          <Image
+            source={
+              Object {
+                "testUri": "../../react-native-element-dropdown/lib/commonjs/assets/down.png",
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "height": 20,
+                  "width": 20,
+                },
+                Object {
+                  "tintColor": "gray",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <RCTScrollView
+      data={
+        Array [
+          Object {
+            "comments": 0,
+            "created_at": "2022-08-02T15:05:29Z",
+            "id": 1325995261,
+            "number": 1297,
+            "title": "[Question] Extra context in formsets - additional examples / explanation for rendering field values as text in formsets?",
+            "user": Object {
+              "login": "rzrwolf",
+            },
+          },
+          Object {
+            "comments": 0,
+            "created_at": "2022-07-19T15:05:37Z",
+            "id": 1309663812,
+            "number": 1296,
+            "title": "Feature Request: configurable global input size instead of bootstrap default size",
+            "user": Object {
+              "login": "NameX44",
+            },
+          },
+          Object {
+            "comments": 2,
+            "created_at": "2022-07-10T09:22:06Z",
+            "id": 1299872111,
+            "number": 1294,
+            "pull_request": Object {},
+            "title": "2.0a1 release",
+            "user": Object {
+              "login": "smithdc1",
+            },
+          },
+        ]
+      }
+      getItem={[Function]}
+      getItemCount={[Function]}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      viewabilityConfigCallbackPairs={Array []}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            style={
+              Object {
+                "borderBottomColor": "darkgray",
+                "borderBottomWidth": 2,
+                "padding": 5,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              [Issue] 
+              [Question] Extra context in formsets - additional examples / explanation for rendering field values as text in formsets?
+            </Text>
+            <Text>
+              #1297 opened on 02 Aug 2022 by rzrwolf
+            </Text>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            style={
+              Object {
+                "borderBottomColor": "darkgray",
+                "borderBottomWidth": 2,
+                "padding": 5,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              [Issue] 
+              Feature Request: configurable global input size instead of bootstrap default size
+            </Text>
+            <Text>
+              #1296 opened on 19 Jul 2022 by NameX44
+            </Text>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            style={
+              Object {
+                "borderBottomColor": "darkgray",
+                "borderBottomWidth": 2,
+                "padding": 5,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              [PR] 
+              2.0a1 release
+            </Text>
+            <Text>
+              #1294 opened on 10 Jul 2022 by smithdc1
+            </Text>
+            <Text>
+              2 comment(s)
+            </Text>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "margin": 10,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "padding": 5,
+            },
+            false,
+            Object {
+              "color": "lightgray",
+            },
+          ]
+        }
+      >
+        &lt;
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "darkgray",
+          "opacity": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "padding": 5,
+            },
+            Object {
+              "color": "white",
+              "fontWeight": "bold",
+            },
+            false,
+          ]
+        }
+      >
+        1
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "padding": 5,
+            },
+            false,
+            false,
+          ]
+        }
+      >
+        2
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "padding": 5,
+            },
+            false,
+            false,
+          ]
+        }
+      >
+        &gt;
+      </Text>
+    </View>
+  </View>
+</View>
+`;

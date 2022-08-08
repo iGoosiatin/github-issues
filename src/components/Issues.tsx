@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { ActivityIndicator, Text, StyleSheet, View } from 'react-native';
 import { useIssues } from '../hooks/useIssues';
-import { SearchDataContext } from '../Context';
 import IssueList from './IssueList';
 import { MemoizedSelect } from './Select';
 import { MemoizedPaginationControls } from './Pagination/PaginationControls';
@@ -9,8 +8,13 @@ import { initialState } from '../State';
 
 import { sortOptions, filterOptions } from '../Utils';
 
-const Issues = () => {
-  const { searchData } = useContext(SearchDataContext);
+import { ISearchData } from '../types/SearchData';
+
+interface IssuesProps {
+  searchData: ISearchData | null;
+}
+
+const Issues: FC<IssuesProps> = ({ searchData }) => {
   const { state, handleLoadIssues, onFilter, onSort, setPage } = useIssues(initialState);
 
   useEffect(() => {
