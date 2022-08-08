@@ -23,7 +23,7 @@ export const sortOptions: ISelectOption<ISort>[] = [
 
 export const filterOptions: ISelectOption<FilterType>[] = [
   {
-    label: 'All',
+    label: 'No filters',
     value: null,
   },
   {

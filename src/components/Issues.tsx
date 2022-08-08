@@ -27,7 +27,13 @@ const Issues = () => {
     <View style={styles.container}>
       <View style={styles.controls}>
         <MemoizedSelect title="Sort By:" options={sortOptions} selectedIndex={state.selectedSortOption} onSelect={onSort} />
-        <MemoizedSelect title="Filter By:" options={filterOptions} selectedIndex={state.selectedFilterOption} onSelect={onFilter} />
+        <MemoizedSelect
+          title="Filter By:"
+          options={filterOptions}
+          selectedIndex={state.selectedFilterOption}
+          onSelect={onFilter}
+          placeholder="Select filter"
+        />
       </View>
       {state.isLoading ? (
         <View style={styles.loading}>

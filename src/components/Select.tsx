@@ -1,36 +1,43 @@
 import React, { FC, memo } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import { ISelectOption } from '../types/Select';
 
 interface SelectProps<T> {
   title: string;
   options: ISelectOption<T>[];
   selectedIndex: number;
+  placeholder?: string;
   onSelect: (index: number) => void;
 }
 
-const Select: FC<SelectProps<any>> = ({ title, options, selectedIndex = 0, onSelect }) => {
+const Select: FC<SelectProps<string | object | null>> = ({ title, options, selectedIndex = 0, placeholder, onSelect }) => {
+  const renderItem = (item: ISelectOption<string | object | null>) => {
+    return (
+      <View style={styles.row}>
+        <Text style={styles.rowText}>{item.label}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text>{title}</Text>
-      <SelectDropdown
+      <Dropdown
+        style={styles.dropdown}
+        selectedTextStyle={styles.selectedTextStyle}
+        placeholderStyle={styles.placeholderStyle}
+        placeholder={placeholder}
         data={options}
-        defaultValueByIndex={selectedIndex}
-        onSelect={(_, index) => {
-          onSelect(index);
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        value={options[selectedIndex]}
+        onChange={(item) => {
+          const index = options.findIndex((option) => option.label === item.label);
+          onSelect(index || 0);
         }}
-        buttonTextAfterSelection={(selectedItem) => {
-          return selectedItem.label;
-        }}
-        rowTextForSelection={(item) => {
-          return item.label;
-        }}
-        buttonStyle={styles.dropdownButtonStyle}
-        buttonTextStyle={styles.dropdownButtonTextStyle}
-        dropdownStyle={styles.dropdownStyle}
-        rowStyle={styles.dropdownRowStyle}
-        rowTextStyle={styles.dropdownRowTextStyle}
+        renderItem={renderItem}
       />
     </View>
   );
@@ -41,32 +48,33 @@ const styles = StyleSheet.create({
     width: '30%',
     marginLeft: 5,
   },
-  dropdownButtonStyle: {
+  dropdown: {
     width: '100%',
     height: 30,
     backgroundColor: '#FFF',
     borderWidth: 1,
     borderColor: '#444',
-    paddingHorizontal: 0,
+    paddingLeft: 5,
   },
-  dropdownButtonTextStyle: {
-    color: '#444',
-    textAlign: 'left',
+  textItem: {
+    flex: 1,
     fontSize: 12,
   },
-  dropdownStyle: {
-    backgroundColor: '#EFEFEF',
+  selectedTextStyle: {
+    fontSize: 12,
   },
-  dropdownRowStyle: {
+  placeholderStyle: {
+    fontSize: 12,
+  },
+  row: {
     height: 30,
-    backgroundColor: '#EFEFEF',
-    borderBottomColor: '#C5C5C5',
-    paddingHorizontal: 0,
+    justifyContent: 'center',
   },
-  dropdownRowTextStyle: {
+  rowText: {
     color: '#444',
     textAlign: 'left',
     fontSize: 12,
+    paddingLeft: 5,
   },
 });
 
